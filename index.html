@@ -3,220 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Íslensk Nöfn — Heimur hringjadóttinssögu</title>
+  <title>Íslensk Nöfn — Hringadróttinninn</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #f7f5f0;
-      --surface: #ffffff;
-      --border: #e2ddd6;
-      --text: #1a1714;
-      --muted: #7a7068;
-      --accent: #3d6b4f;
-      --accent-light: #eef4f0;
-      --tag-bg: #f0ece6;
+      --bg: #f7f5f0; --surface: #ffffff; --border: #e2ddd6;
+      --text: #1a1714; --muted: #7a7068; --accent: #3d6b4f;
+      --accent-light: #eef4f0; --tag-bg: #f0ece6;
       --shadow: 0 1px 4px rgba(0,0,0,0.07);
     }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.6; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    header {
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      padding: 2.5rem 2rem 2rem;
-    }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem 0; }
     .header-inner { max-width: 900px; margin: 0 auto; }
-    .site-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-    header h1 {
-      font-family: 'Lora', serif;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 600;
-      line-height: 1.2;
-    }
+    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .site-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem; }
+    header h1 { font-family: 'Lora', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.2; }
     header h1 em { font-style: italic; color: var(--accent); }
-    header p { margin-top: 0.6rem; color: var(--muted); font-size: 0.9rem; max-width: 520px; }
+    header p { margin-top: 0.5rem; color: var(--muted); font-size: 0.9rem; max-width: 520px; }
 
-    .controls {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .search-wrap { flex: 1; min-width: 220px; position: relative; }
-    .search-wrap svg {
-      position: absolute; left: 0.85rem; top: 50%;
-      transform: translateY(-50%); color: var(--muted); pointer-events: none;
-    }
-    input[type="search"] {
-      width: 100%;
-      padding: 0.65rem 1rem 0.65rem 2.5rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--surface);
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    input[type="search"]:focus { border-color: var(--accent); }
-    input[type="search"]::placeholder { color: var(--muted); }
-
-    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .filter-btn {
-      padding: 0.55rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--surface);
-      font-family: inherit;
-      font-size: 0.82rem;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    .stats { max-width: 900px; margin: 0 auto 1rem; padding: 0 2rem; font-size: 0.8rem; color: var(--muted); }
-
-    .table-wrap { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    thead th {
-      text-align: left;
-      padding: 0.85rem 1.1rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 500;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-      cursor: pointer;
-      user-select: none;
-      white-space: nowrap;
-    }
-    thead th:hover { color: var(--accent); }
-    thead th .sort-icon { opacity: 0.4; margin-left: 4px; }
-    thead th.sorted .sort-icon { opacity: 1; color: var(--accent); }
-
-    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--accent-light); }
-
-    td { padding: 0.9rem 1.1rem; vertical-align: top; }
-    .name-en { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; }
-    .name-is { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; color: var(--accent); }
-    .race-tag {
-      display: inline-block;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      background: var(--tag-bg);
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .etymology { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
-
-    tr.detail-row { background: var(--accent-light); }
-    tr.detail-row td {
-      padding: 0.5rem 1.1rem 1rem 2.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    tr.detail-row .lore {
-      border-left: 2px solid var(--accent);
-      padding-left: 0.85rem;
-      font-style: italic;
-      line-height: 1.7;
-    }
-
-    .expand-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); padding: 0 0.3rem;
-      font-size: 1rem; line-height: 1;
-      transition: transform 0.2s, color 0.15s;
-    }
-    .expand-btn:hover { color: var(--accent); }
-    .expand-btn.open { transform: rotate(90deg); color: var(--accent); }
-
-    /* Loading / error states */
-    .status-box {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--muted);
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 1rem;
-    }
-    .status-box.error { color: #c0392b; font-style: normal; font-size: 0.9rem; line-height: 1.7; }
-    .status-box code {
-      display: inline-block;
-      background: var(--tag-bg);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      font-family: monospace;
-      font-style: normal;
-      font-size: 0.85rem;
-    }
-
-    .empty { text-align: center; padding: 4rem 2rem; color: var(--muted); font-family: 'Lora', serif; font-style: italic; }
-
-    footer { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); }
-    footer a { color: var(--accent); text-decoration: none; }
-
-    /* ── Language toggle ── */
-    .lang-toggle {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      font-size: 0.82rem;
-      flex-shrink: 0;
-    }
-    .lang-toggle button {
-      padding: 0.55rem 0.9rem;
-      background: var(--surface);
-      border: none;
-      font-family: inherit;
-      font-size: inherit;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
+    .lang-toggle { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-size: 0.82rem; flex-shrink: 0; height: fit-content; }
+    .lang-toggle button { padding: 0.55rem 0.9rem; background: var(--surface); border: none; font-family: inherit; font-size: inherit; color: var(--muted); cursor: pointer; transition: all 0.15s; }
     .lang-toggle button.active { background: var(--accent); color: #fff; }
     .lang-toggle button:not(.active):hover { color: var(--accent); background: var(--accent-light); }
     .lang-toggle .divider { width: 1px; align-self: stretch; background: var(--border); }
 
+    .tabs { display: flex; }
+    .tab-btn { padding: 0.75rem 1.4rem; background: none; border: none; border-bottom: 2px solid transparent; font-family: inherit; font-size: 0.88rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .controls { max-width: 900px; margin: 2rem auto; padding: 0 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    .search-wrap { flex: 1; min-width: 220px; position: relative; }
+    .search-wrap svg { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    input[type="search"] { width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); font-family: inherit; font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.15s; }
+    input[type="search"]:focus { border-color: var(--accent); }
+    input[type="search"]::placeholder { color: var(--muted); }
+
+    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn { padding: 0.55rem 1rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); font-family: inherit; font-size: 0.82rem; color: var(--muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .stats { max-width: 900px; margin: 0 auto 1rem; padding: 0 2rem; font-size: 0.8rem; color: var(--muted); }
+    .table-wrap { max-width: 900px; margin: 0 auto 4rem; padding: 0 2rem; }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+    thead th { text-align: left; padding: 0.85rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--border); background: var(--bg); cursor: pointer; user-select: none; white-space: nowrap; }
+    thead th:hover { color: var(--accent); }
+    thead th .sort-icon { opacity: 0.4; margin-left: 4px; }
+    thead th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--accent-light); }
+    td { padding: 0.9rem 1.1rem; vertical-align: top; }
+    .name-en { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; }
+    .name-cell { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .gw-link { opacity: 0; transition: opacity 0.15s; color: var(--muted); flex-shrink: 0; line-height: 1; text-decoration: none; }
+    .gw-link:hover { color: var(--accent); }
+    .gw-link svg { display: block; }
+    tr:hover .gw-link { opacity: 1; }
+    .name-is { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; color: var(--accent); }
+    .race-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 4px; background: var(--tag-bg); font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+    .etymology { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+    tr.detail-row { background: var(--accent-light); }
+    tr.detail-row td { padding: 0.5rem 1.1rem 1rem 2.5rem; font-size: 0.85rem; color: var(--muted); }
+    tr.detail-row .lore { border-left: 2px solid var(--accent); padding-left: 0.85rem; font-style: italic; line-height: 1.7; }
+    .expand-btn { background: none; border: none; cursor: pointer; color: var(--muted); padding: 0 0.3rem; font-size: 1rem; line-height: 1; transition: transform 0.2s, color 0.15s; }
+    .expand-btn:hover { color: var(--accent); }
+    .expand-btn.open { transform: rotate(90deg); color: var(--accent); }
+
+    .status-box { text-align: center; padding: 4rem 2rem; color: var(--muted); font-family: 'Lora', serif; font-style: italic; font-size: 1rem; }
+    .status-box.error { color: #c0392b; font-style: normal; font-size: 0.9rem; line-height: 1.7; }
+    .status-box code { display: inline-block; background: var(--tag-bg); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: monospace; font-style: normal; font-size: 0.85rem; }
+    .empty { text-align: center; padding: 4rem 2rem; color: var(--muted); font-family: 'Lora', serif; font-style: italic; }
+    footer { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); }
+    footer a { color: var(--accent); text-decoration: none; }
     @media (max-width: 600px) { .col-race, .col-etymology { display: none; } }
   </style>
 </head>
@@ -224,272 +90,323 @@
 
 <header>
   <div class="header-inner">
-    <div class="site-eyebrow">Íslenskar þýðingar · Icelandic Translations</div>
-    <h1>Nöfn úr <em>Heim Hringjadróttinssögu</em></h1>
-    <h2>eftir J.R.R Tolkien</em></h2>
-    <p>A reference for Icelandic translations of names from Tolkien's legendarium — with origins, lore notes, and etymology.</p>
+    <div class="header-top">
+      <div>
+        <div class="site-eyebrow" id="eyebrow"></div>
+        <h1 id="siteTitle"></h1>
+        <p id="siteSubtitle"></p>
+      </div>
+      <div class="lang-toggle">
+        <button id="langIs" class="active">IS</button>
+        <div class="divider"></div>
+        <button id="langEn">EN</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="names" id="tabNames"></button>
+      <button class="tab-btn" data-tab="places" id="tabPlaces"></button>
+    </div>
   </div>
 </header>
 
-<div class="controls">
-  <div class="search-wrap">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="search" id="searchInput" placeholder="Search names…" autocomplete="off">
+<div class="tab-panel active" id="panel-names">
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="searchInput" autocomplete="off">
+    </div>
+    <div class="filter-group" id="filters"></div>
   </div>
-  <div class="lang-toggle">
-    <button id="langIs" class="active" title="Íslenska">IS</button>
-    <div class="divider"></div>
-    <button id="langEn" title="English">EN</button>
-  </div>
-  <div class="filter-group" id="filters"></div>
-</div>
-
-<div class="stats" id="stats"></div>
-
-<div class="table-wrap">
-  <div id="statusBox" class="status-box">Loading names…</div>
-  <table id="namesTable" style="display:none">
-    <thead>
-      <tr>
+  <div class="stats" id="stats"></div>
+  <div class="table-wrap">
+    <div id="statusBox" class="status-box"></div>
+    <table id="namesTable" style="display:none">
+      <thead><tr>
         <th></th>
-        <th class="col-en" data-col="english">English Name <span class="sort-icon">↕</span></th>
-        <th class="col-is" data-col="icelandic">Icelandic Name <span class="sort-icon">↕</span></th>
-        <th class="col-race" data-col="race">Race <span class="sort-icon">↕</span></th>
-        <th class="col-etymology">Etymology / Notes</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-  <div class="empty" id="emptyState" style="display:none">Ekkert fannst — No names found.</div>
+        <th class="col-en" data-col="english" data-tbl="names"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-is" data-col="icelandic" data-tbl="names"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-race" data-col="race" data-tbl="names"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-etymology"><span class="hdr-text"></span></th>
+      </tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="empty" id="emptyNames" style="display:none"></div>
+  </div>
 </div>
 
-<footer>
-  Data compiled from Tolkien's works. This is a fan reference site. &nbsp;·&nbsp;
-  <a href="https://github.com/" target="_blank">View on GitHub</a>
-</footer>
+<div class="tab-panel" id="panel-places">
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="placeSearch" autocomplete="off">
+    </div>
+    <div class="filter-group" id="placeFilters"></div>
+  </div>
+  <div class="stats" id="placeStats"></div>
+  <div class="table-wrap">
+    <div id="placeStatusBox" class="status-box"></div>
+    <table id="placesTable" style="display:none">
+      <thead><tr>
+        <th></th>
+        <th class="col-en" data-col="english" data-tbl="places"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-is" data-col="icelandic" data-tbl="places"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-race" data-col="type" data-tbl="places"><span class="hdr-text"></span><span class="sort-icon">↕</span></th>
+        <th class="col-etymology"><span class="hdr-text"></span></th>
+      </tr></thead>
+      <tbody id="placeTableBody"></tbody>
+    </table>
+    <div class="empty" id="emptyPlaces" style="display:none"></div>
+  </div>
+</div>
+
+<footer>Data compiled from Tolkien's works. This is a fan reference site. &nbsp;·&nbsp; <a href="https://github.com/" target="_blank">View on GitHub</a></footer>
 
 <script>
-// ── CSV parser (handles quoted fields with commas inside) ──
 function parseCSV(text) {
-  const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+  const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
   const headers = parseLine(lines[0]);
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
     const vals = parseLine(lines[i]);
     const obj = {};
-    headers.forEach((h, idx) => obj[h.trim().toLowerCase()] = (vals[idx] || '').trim());
+    headers.forEach((h,idx) => obj[h.trim().toLowerCase()] = (vals[idx]||'').trim());
     rows.push(obj);
   }
   return rows;
 }
-
-  function parseLine(line) {
-  line = line.replace(/\r$/, '');
-  const fields = [];
-  let cur = '', inQuotes = false;
+function parseLine(line) {
+  line = line.replace(/\r$/,'');
+  const fields = []; let cur = '', inQ = false;
   for (let i = 0; i < line.length; i++) {
     const c = line[i];
-    if (c === '"') {
-      if (inQuotes && line[i+1] === '"') { cur += '"'; i++; }
-      else inQuotes = !inQuotes;
-    } else if (c === ',' && !inQuotes) {
-      fields.push(cur); cur = '';
-    } else {
-      cur += c;
-    }
+    if (c==='"') { if (inQ && line[i+1]==='"') { cur+='"'; i++; } else if(inQ) inQ=false; else inQ=true; }
+    else if (c===',' && !inQ) { fields.push(cur); cur=''; }
+    else cur+=c;
   }
-  fields.push(cur);
-  return fields;
+  fields.push(cur); return fields;
 }
 
-// ── Language strings ──
 const ui = {
   is: {
-    eyebrow:      'Íslenskar þýðingar · Icelandic Translations',
-    h1:           'Nöfn úr <em>Heim Hringjadróttinssögu</em>',
-    subtitle:     'Íslenskar þýðingar á nöfnum úr heimi Tolkiens — með uppruna, þáttasögur og orðsifjafræði.',
-    search:       'Leita að nafni…',
-    filters:      ['Öll', 'Hobbitar', 'Menn', 'Álfar', 'Dvergar', 'Galdramenn', 'Annað'],
-    colEn:        'Enska nafn',
-    colIs:        'Íslenska nafn',
-    colRace:      'Kyn',
-    colEty:       'Orðsifjafræði / Skýringar',
-    empty:        'Ekkert fannst — No names found.',
-    showing:      (n, t) => `Sýni ${n} af ${t} nöfnum`,
+    eyebrow:'Íslenskar þýðingar · Icelandic Translations',
+    h1:'Nöfn úr <em>heim Hringadróttinsins</em>',
+    subtitle:'Íslenskar þýðingar á nöfnum úr \'hugarheimi\' Tolkiens — með uppruna, þáttasögur og orðsifjafræði.',
+    tabNames:'Persónuheiti', tabPlaces:'Staðarheiti',
+    searchNames:'Leita að nafni…', searchPlaces:'Leita að stað…',
+    colEn:'Enska', colIs:'Íslenska', colRace:'Kyn', colType:'Tegund', colEty:'Orðsifjafræði / Skýringar',
+    emptyNames:'Ekkert fannst.', emptyPlaces:'Ekkert fannst.',
+    loading:'Hleð…', showing:(n,t)=>`Sýni ${n} af ${t}`,
+    nameFilters:['Öll','Hobbitar','Menn','Álfar','Dvergar','Galdramenn','Annað'],
   },
   en: {
-    eyebrow:      'Icelandic Translations · Íslenskar þýðingar',
-    h1:           'Names from <em>The Lord of the Rings</em>',
-    subtitle:     'Icelandic translations of names from Tolkien\'s legendarium — with origins, lore notes, and etymology.',
-    search:       'Search names…',
-    filters:      ['All', 'Hobbits', 'Men', 'Elves', 'Dwarves', 'Wizards', 'Other'],
-    colEn:        'English Name',
-    colIs:        'Icelandic Name',
-    colRace:      'Race',
-    colEty:       'Etymology / Notes',
-    empty:        'No names found — Ekkert fannst.',
-    showing:      (n, t) => `Showing ${n} of ${t} names`,
+    eyebrow:'Icelandic Translations · Íslenskar þýðingar',
+    h1:'Names from <em>The Lord of the Rings</em>',
+    subtitle:"Icelandic translations of names from Tolkien's legendarium — with origins, lore notes, and etymology.",
+    tabNames:'Character Names', tabPlaces:'Place Names',
+    searchNames:'Search names…', searchPlaces:'Search places…',
+    colEn:'English', colIs:'Icelandic', colRace:'Race', colType:'Type', colEty:'Etymology / Notes',
+    emptyNames:'No names found.', emptyPlaces:'No places found.',
+    loading:'Loading…', showing:(n,t)=>`Showing ${n} of ${t}`,
+    nameFilters:['All','Hobbits','Men','Elves','Dwarves','Wizards','Other'],
   }
 };
+const raceValues = ['all','Hobbit','Man','Elf','Dwarf','Wizard','Other'];
 
-const raceValues = ['all', 'Hobbit', 'Man', 'Elf', 'Dwarf', 'Wizard', 'Other'];
-
-// ── App state ──
-let allNames = [];
-let currentRace = 'all';
-let currentSort = { col: 'english', dir: 1 };
-let expandedRows = new Set();
 let lang = 'is';
+let allNames=[], currentRace='all', nameSort={col:'english',dir:1}, expandedNames=new Set();
+let allPlaces=[], currentType='all', placeSort={col:'english',dir:1}, expandedPlaces=new Set();
 
-const tbody       = document.getElementById('tableBody');
-const searchInput = document.getElementById('searchInput');
-const emptyState  = document.getElementById('emptyState');
-const statsEl     = document.getElementById('stats');
-const statusBox   = document.getElementById('statusBox');
-const table       = document.getElementById('namesTable');
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Lang
+document.getElementById('langIs').addEventListener('click', ()=>{ lang='is'; applyLang(); });
+document.getElementById('langEn').addEventListener('click', ()=>{ lang='en'; applyLang(); });
 
 function applyLang() {
   const t = ui[lang];
-  document.querySelector('.site-eyebrow').textContent = t.eyebrow;
-  document.querySelector('header h1').innerHTML = t.h1;
-  document.querySelector('header p').textContent = t.subtitle;
-  searchInput.placeholder = t.search;
-  // Filter buttons
-  const btns = document.querySelectorAll('#filters .filter-btn');
-  btns.forEach((b, i) => b.textContent = t.filters[i]);
-  // Table headers
-  document.querySelector('.col-en').childNodes[0].textContent = t.colEn + ' ';
-  document.querySelector('.col-is').childNodes[0].textContent = t.colIs + ' ';
-  document.querySelector('.col-race').childNodes[0].textContent = t.colRace + ' ';
-  document.querySelector('.col-etymology').childNodes[0].textContent = t.colEty;
-  emptyState.textContent = t.empty;
-  // Lang buttons
-  document.getElementById('langIs').classList.toggle('active', lang === 'is');
-  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  document.getElementById('eyebrow').textContent = t.eyebrow;
+  document.getElementById('siteTitle').innerHTML = t.h1;
+  document.getElementById('siteSubtitle').textContent = t.subtitle;
+  document.getElementById('tabNames').textContent = t.tabNames;
+  document.getElementById('tabPlaces').textContent = t.tabPlaces;
+  document.getElementById('searchInput').placeholder = t.searchNames;
+  document.getElementById('placeSearch').placeholder = t.searchPlaces;
+  document.getElementById('emptyNames').textContent = t.emptyNames;
+  document.getElementById('emptyPlaces').textContent = t.emptyPlaces;
+  document.getElementById('langIs').classList.toggle('active', lang==='is');
+  document.getElementById('langEn').classList.toggle('active', lang==='en');
+
+  // Headers for names table
+  const nh = document.querySelectorAll('#namesTable thead th');
+  nh[1].querySelector('.hdr-text').textContent = t.colEn;
+  nh[2].querySelector('.hdr-text').textContent = t.colIs;
+  nh[3].querySelector('.hdr-text').textContent = t.colRace;
+  nh[4].querySelector('.hdr-text').textContent = t.colEty;
+  // Headers for places table
+  const ph = document.querySelectorAll('#placesTable thead th');
+  ph[1].querySelector('.hdr-text').textContent = t.colEn;
+  ph[2].querySelector('.hdr-text').textContent = t.colIs;
+  ph[3].querySelector('.hdr-text').textContent = t.colType;
+  ph[4].querySelector('.hdr-text').textContent = t.colEty;
+
+  buildNameFilters();
+  buildPlaceFilters();
   render();
+  renderPlaces();
 }
 
-document.getElementById('langIs').addEventListener('click', () => { lang = 'is'; applyLang(); });
-document.getElementById('langEn').addEventListener('click', () => { lang = 'en'; applyLang(); });
+function gwLink(term) {
+  const slug = encodeURIComponent((term||'').replace(/\s+/g,'_'));
+  return `<a class="gw-link" href="https://tolkiengateway.net/wiki/${slug}" target="_blank" rel="noopener" title="Tolkien Gateway"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`;
+}
 
-// ── Load CSV ──
-fetch('names.csv')
-  .then(r => {
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.text();
-  })
-  .then(text => {
-    allNames = parseCSV(text).filter(n => n.english);
-    // Build filter buttons dynamically
-    const filtersEl = document.getElementById('filters');
-    filtersEl.innerHTML = '';
-    raceValues.forEach((race, i) => {
-      const b = document.createElement('button');
-      b.className = 'filter-btn' + (race === 'all' ? ' active' : '');
-      b.dataset.race = race;
-      b.textContent = ui[lang].filters[i];
-      filtersEl.appendChild(b);
-    });
-    statusBox.style.display = 'none';
-    table.style.display = '';
-    render();
-  })
-  .catch(err => {
-    statusBox.className = 'status-box error';
-    statusBox.innerHTML = `
-      <strong>Could not load names.csv</strong><br><br>
-      Make sure <code>names.csv</code> is in the same folder as <code>index.html</code>.<br>
-      If you're developing locally, open with Live Server in VSCodium rather than opening the file directly.<br><br>
-      <em>Error: ${err.message}</em>
-    `;
-  });
-
-// ── Render ──
-function render() {
-  const q = searchInput.value.toLowerCase().trim();
-  let data = allNames.filter(n => {
-    const matchRace   = currentRace === 'all' || n.race === currentRace;
-    const matchSearch = !q ||
-      (n.english    || '').toLowerCase().includes(q) ||
-      (n.icelandic  || '').toLowerCase().includes(q) ||
-      (n.etymology  || '').toLowerCase().includes(q);
-    return matchRace && matchSearch;
-  });
-
-  data.sort((a, b) => {
-    const av = (a[currentSort.col] || '').toLowerCase();
-    const bv = (b[currentSort.col] || '').toLowerCase();
-    return av < bv ? -currentSort.dir : av > bv ? currentSort.dir : 0;
-  });
-
-  tbody.innerHTML = '';
-  if (data.length === 0) {
-    emptyState.style.display = 'block';
-    statsEl.textContent = '';
-    return;
-  }
-  emptyState.style.display = 'none';
-  statsEl.textContent = ui[lang].showing(data.length, allNames.length);
-
-  data.forEach(n => {
-    const id     = (n.english || '').replace(/\s/g, '_');
-    const isOpen = expandedRows.has(id);
-
+function makeRows(data, expandedSet, rerenderFn, typeField) {
+  const rows = [];
+  data.forEach(item => {
+    const id = (item.english||'').replace(/\W/g,'_');
+    const isOpen = expandedSet.has(id);
+    const ety  = (lang==='is' ? (item.etymology_is||item.etymology) : item.etymology)||'';
+    const lore = (lang==='is' ? (item.lore_is||item.lore) : item.lore)||'';
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td style="width:30px;padding-right:0">
-        <button class="expand-btn ${isOpen ? 'open' : ''}" data-id="${id}" title="Show lore note">›</button>
-      </td>
-      <td><span class="name-en">${n.english || ''}</span></td>
-      <td><span class="name-is">${n.icelandic || ''}</span></td>
-      <td class="col-race"><span class="race-tag">${n.race || ''}</span></td>
-      <td class="col-etymology"><span class="etymology">${n.etymology || ''}</span></td>
-    `;
-    tbody.appendChild(tr);
-
-    if (isOpen && n.lore) {
+      <td style="width:30px;padding-right:0"><button class="expand-btn ${isOpen?'open':''}" data-id="${id}">›</button></td>
+      <td><span class="name-cell"><span class="name-en">${item.english||''}</span>${gwLink(item.english)}</span></td>
+      <td><span class="name-cell"><span class="name-is">${item.icelandic||''}</span>${gwLink(item.english)}</span></td>
+      <td class="col-race"><span class="race-tag">${typeField==="type" ? placeTypeLabel(item[typeField]||"") : (item[typeField]||"")}</span></td>
+      <td class="col-etymology"><span class="etymology">${ety}</span></td>`;
+    rows.push(tr);
+    if (isOpen && lore) {
       const dr = document.createElement('tr');
       dr.className = 'detail-row';
-      dr.innerHTML = `<td></td><td colspan="4"><div class="lore">${n.lore}</div></td>`;
-      tbody.appendChild(dr);
+      dr.innerHTML = `<td></td><td colspan="4"><div class="lore">${lore}</div></td>`;
+      rows.push(dr);
     }
-  });
-
-  tbody.querySelectorAll('.expand-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      if (expandedRows.has(id)) expandedRows.delete(id);
-      else expandedRows.add(id);
-      render();
+    tr.querySelector('.expand-btn').addEventListener('click', () => {
+      if (expandedSet.has(id)) expandedSet.delete(id); else expandedSet.add(id);
+      rerenderFn();
     });
+  });
+  return rows;
+}
+
+// Names
+function buildNameFilters() {
+  const el = document.getElementById('filters'); el.innerHTML='';
+  raceValues.forEach((race,i) => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn'+(race===currentRace?' active':'');
+    b.dataset.race = race; b.textContent = ui[lang].nameFilters[i];
+    el.appendChild(b);
+  });
+}
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let data = allNames.filter(n => {
+    return (currentRace==='all'||n.race===currentRace) &&
+      (!q||(n.english||'').toLowerCase().includes(q)||(n.icelandic||'').toLowerCase().includes(q)||(n.etymology||'').toLowerCase().includes(q));
+  });
+  data.sort((a,b)=>{ const av=(a[nameSort.col]||'').toLowerCase(),bv=(b[nameSort.col]||'').toLowerCase(); return av<bv?-nameSort.dir:av>bv?nameSort.dir:0; });
+  const tbody=document.getElementById('tableBody'); tbody.innerHTML='';
+  const empty=document.getElementById('emptyNames');
+  if(!data.length){empty.style.display='block';document.getElementById('stats').textContent='';return;}
+  empty.style.display='none'; document.getElementById('stats').textContent=ui[lang].showing(data.length,allNames.length);
+  makeRows(data,expandedNames,render,'race').forEach(r=>tbody.appendChild(r));
+}
+document.getElementById('filters').addEventListener('click',e=>{
+  const btn=e.target.closest('.filter-btn'); if(!btn)return;
+  document.querySelectorAll('#filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); currentRace=btn.dataset.race; render();
+});
+document.getElementById('searchInput').addEventListener('input',render);
+
+// Places
+const placeTypeLabels = {
+  'all':       { en: 'All',       is: 'Allt' },
+  'Homeland':  { en: 'Homeland',  is: 'Heimkynni' },
+  'Refuge':    { en: 'Refuge',    is: 'Athvarf' },
+  'Realm':     { en: 'Realm',     is: 'Ríki' },
+  'Kingdom':   { en: 'Kingdom',   is: 'Konungsríki' },
+  'Dark land': { en: 'Dark land', is: 'Myrkurland' },
+  'Volcano':   { en: 'Volcano',   is: 'Eldfjall' },
+  'Forest':    { en: 'Forest',    is: 'Skógur' },
+  'Fortress':  { en: 'Fortress',  is: 'Vígi' },
+  'City':      { en: 'City',      is: 'Borg' },
+  'Mountains': { en: 'Mountains', is: 'Fjöll' },
+  'Dwelling':  { en: 'Dwelling',  is: 'Bústaður' },
+};
+
+function placeTypeLabel(type) {
+  return (placeTypeLabels[type] && placeTypeLabels[type][lang]) || type;
+}
+
+function buildPlaceFilters() {
+  const el=document.getElementById('placeFilters'); el.innerHTML='';
+  const types=['all',...new Set(allPlaces.map(p=>p.type).filter(Boolean))];
+  types.forEach(type=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(type===currentType?' active':'');
+    b.dataset.type=type; b.textContent=placeTypeLabel(type);
+    el.appendChild(b);
+  });
+}
+function renderPlaces() {
+  const q=document.getElementById('placeSearch').value.toLowerCase().trim();
+  let data=allPlaces.filter(p=>{
+    return (currentType==='all'||p.type===currentType) &&
+      (!q||(p.english||'').toLowerCase().includes(q)||(p.icelandic||'').toLowerCase().includes(q)||(p.etymology||'').toLowerCase().includes(q));
+  });
+  data.sort((a,b)=>{ const av=(a[placeSort.col]||'').toLowerCase(),bv=(b[placeSort.col]||'').toLowerCase(); return av<bv?-placeSort.dir:av>bv?placeSort.dir:0; });
+  const tbody=document.getElementById('placeTableBody'); tbody.innerHTML='';
+  const empty=document.getElementById('emptyPlaces');
+  if(!data.length){empty.style.display='block';document.getElementById('placeStats').textContent='';return;}
+  empty.style.display='none'; document.getElementById('placeStats').textContent=ui[lang].showing(data.length,allPlaces.length);
+  makeRows(data,expandedPlaces,renderPlaces,'type').forEach(r=>tbody.appendChild(r));
+}
+document.getElementById('placeFilters').addEventListener('click',e=>{
+  const btn=e.target.closest('.filter-btn'); if(!btn)return;
+  document.querySelectorAll('#placeFilters .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); currentType=btn.dataset.type; renderPlaces();
+});
+document.getElementById('placeSearch').addEventListener('input',renderPlaces);
+
+// Sort
+document.addEventListener('click',e=>{
+  const th=e.target.closest('thead th[data-tbl]'); if(!th)return;
+  const tbl=th.dataset.tbl, col=th.dataset.col;
+  const srt=tbl==='names'?nameSort:placeSort;
+  if(srt.col===col) srt.dir*=-1; else{srt.col=col;srt.dir=1;}
+  document.querySelectorAll(`thead th[data-tbl="${tbl}"]`).forEach(t=>{t.classList.remove('sorted');t.querySelector('.sort-icon').textContent='↕';});
+  th.classList.add('sorted'); th.querySelector('.sort-icon').textContent=srt.dir===1?'↑':'↓';
+  tbl==='names'?render():renderPlaces();
+});
+
+// Load CSVs
+function loadCSV(url, onSuccess, boxId, tableId) {
+  const box=document.getElementById(boxId); box.textContent=ui[lang].loading;
+  fetch(url).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.text();})
+  .then(text=>{
+    const rows=parseCSV(text).filter(r=>r.english);
+    box.style.display='none'; document.getElementById(tableId).style.display='';
+    onSuccess(rows);
+  }).catch(err=>{
+    box.className='status-box error';
+    box.innerHTML=`<strong>Could not load ${url}</strong><br><br>Make sure <code>${url}</code> is in the same folder as <code>index.html</code>.<br><br><em>Error: ${err.message}</em>`;
   });
 }
 
-// ── Sort headers ──
-document.querySelectorAll('thead th[data-col]').forEach(th => {
-  th.addEventListener('click', () => {
-    const col = th.dataset.col;
-    if (currentSort.col === col) currentSort.dir *= -1;
-    else { currentSort.col = col; currentSort.dir = 1; }
-    document.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted'));
-    th.classList.add('sorted');
-    th.querySelector('.sort-icon').textContent = currentSort.dir === 1 ? '↑' : '↓';
-    render();
-  });
-});
+loadCSV('names.csv', rows=>{ allNames=rows; buildNameFilters(); render(); }, 'statusBox', 'namesTable');
+loadCSV('places.csv', rows=>{ allPlaces=rows; buildPlaceFilters(); renderPlaces(); }, 'placeStatusBox', 'placesTable');
 
-// ── Filters ──
-document.getElementById('filters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentRace = btn.dataset.race;
-  render();
-});
-
-searchInput.addEventListener('input', render);
+applyLang();
 </script>
 </body>
 </html>
