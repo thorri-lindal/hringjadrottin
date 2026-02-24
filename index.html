@@ -283,7 +283,8 @@ function parseCSV(text) {
   return rows;
 }
 
-function parseLine(line) {
+  function parseLine(line) {
+  line = line.replace(/\r$/, '');
   const fields = [];
   let cur = '', inQuotes = false;
   for (let i = 0; i < line.length; i++) {
